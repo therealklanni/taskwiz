@@ -1,0 +1,27 @@
+{
+  "name": "taskwiz",
+  "version": "0.0.0",
+  "description": "TaskWiz library, based on TaskWarrior",
+  "main": "dist/taskwiz.js",
+  "jsnext:main": "dist/taskwiz.es2015.js",
+  "scripts": {
+    "build": "rm -rf dist; npm run lint && rollup -c && rollup -c rollup.es2015-config.js",
+    "lint": "standard index.js",
+    "test": "ava"
+  },
+  "keywords": [
+    "task",
+    "taskwarrior",
+    "tasks"
+  ],
+  "author": "Kevin Lanni <therealklanni@gmail.com> (https://github.com/therealklanni)",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.9.1",
+    "babel-preset-es2015-rollup": "^1.0.0",
+    "babel-preset-stage-2": "^6.3.13",
+    "rollup": "^0.24.0",
+    "rollup-plugin-babel": "^2.3.6",
+    "standard": "^5.4.1"
+  }
+}
