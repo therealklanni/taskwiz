@@ -101,13 +101,39 @@ test('create waiting task', t => {
   })
 })
 
-test('create recurring task', t => {
+test('create recurring parent task', t => {
   const details = {
     status: 'recurring',
     description: 'testing',
     due: moment().format(format),
     recur: 'monthly',
     mask: '----'
+  }
+
+  return create(details).then(result => {
+    const {
+      uuid,
+      entry,
+      ...rest
+    } = result
+
+    verifyCoreProperties(t, { uuid, entry, description: rest.description })
+
+    t.notOk(rest.hasOwnProperty('end'), '`end` must not exist')
+    t.notOk(rest.hasOwnProperty('wait'), '`wait` must not exist')
+
+    // Verify non-generated provided properties were applied
+    t.same(rest, details, 'Original properties must not be modified')
+  })
+})
+
+test('create recurring child task', t => {
+  const details = {
+    status: 'recurring',
+    description: 'testing',
+    parent: 'uuid',
+    recur: 'monthly',
+    imask: 0
   }
 
   return create(details).then(result => {
