@@ -128,9 +128,9 @@ test('create recurring task', t => {
 })
 
 test('rejects', t => {
-  const invalid = /Invalid/
-  const illegal = /Illegal Property/
-  const required = /Required Property/
+  const invalid = x => new RegExp(`Invalid ${x}`)
+  const illegal = x => new RegExp(`Illegal Property: ${x}`)
+  const required = x => new RegExp(`Required Property: ${x}`)
   const date = moment().format(format)
   const description = 'test'
   const due = '19791224T245051'
@@ -146,56 +146,56 @@ test('rejects', t => {
   const recurring = { status: 'recurring' }
 
   // any status
-  t.throws(create(), invalid)
-  t.throws(create({ status: 'invalid' }), invalid)
-  t.throws(create({ ...pending }), required) // description
-  t.throws(create({ ...pending, description: '\n' }), invalid)
-  t.throws(create({ ...pending, description, due }), invalid)
-  t.throws(create({ ...pending, description, start }), invalid)
-  t.throws(create({ ...pending, description, until }), invalid)
-  t.throws(create({ ...pending, description, scheduled }), invalid)
-  t.throws(create({ ...pending, description, priority }), invalid)
+  t.throws(create(), invalid('status'))
+  t.throws(create({ status: 'invalid' }), invalid('status'))
+  t.throws(create({ ...pending }), required('description'))
+  t.throws(create({ ...pending, description: '\n' }), invalid('description'))
+  t.throws(create({ ...pending, description, due }), invalid('due'))
+  t.throws(create({ ...pending, description, start }), invalid('start'))
+  t.throws(create({ ...pending, description, until }), invalid('until'))
+  t.throws(create({ ...pending, description, scheduled }), invalid('scheduled'))
+  t.throws(create({ ...pending, description, priority }), invalid('priority'))
 
   // pending
-  t.throws(create({ ...pending, end }), illegal)
-  t.throws(create({ ...pending, wait }), illegal)
-  t.throws(create({ ...pending, recur }), illegal)
-  t.throws(create({ ...pending, mask }), illegal)
-  t.throws(create({ ...pending, imask }), illegal)
-  t.throws(create({ ...pending, parent }), illegal)
+  t.throws(create({ ...pending, end }), illegal('end'))
+  t.throws(create({ ...pending, wait }), illegal('wait'))
+  t.throws(create({ ...pending, recur }), illegal('recur'))
+  t.throws(create({ ...pending, mask }), illegal('mask'))
+  t.throws(create({ ...pending, imask }), illegal('imask'))
+  t.throws(create({ ...pending, parent }), illegal('parent'))
 
   // deleted
   t.throws(create({ status: 'deleted' }), /Nothing to do/)
 
   // completed
-  t.throws(create({ ...completed }), required) // end
-  t.throws(create({ ...completed, end }), invalid)
-  t.throws(create({ ...completed, wait }), illegal)
-  t.throws(create({ ...completed, recur }), illegal)
-  t.throws(create({ ...completed, mask }), illegal)
-  t.throws(create({ ...completed, imask }), illegal)
-  t.throws(create({ ...completed, parent }), illegal)
+  t.throws(create({ ...completed, end }), invalid('end'))
+  t.throws(create({ ...completed, wait }), illegal('wait'))
+  t.throws(create({ ...completed, recur }), illegal('recur'))
+  t.throws(create({ ...completed, mask }), illegal('mask'))
+  t.throws(create({ ...completed, imask }), illegal('imask'))
+  t.throws(create({ ...completed, parent }), illegal('parent'))
 
   // waiting
-  t.throws(create({ ...waiting }), required) // wait
-  t.throws(create({ ...waiting, wait }), invalid)
-  t.throws(create({ ...waiting, end }), illegal)
-  t.throws(create({ ...waiting, recur }), illegal)
-  t.throws(create({ ...waiting, mask }), illegal)
-  t.throws(create({ ...waiting, imask }), illegal)
-  t.throws(create({ ...waiting, parent }), illegal)
+  t.throws(create({ ...waiting }), required('wait'))
+  t.throws(create({ ...waiting, wait }), invalid('wait'))
+  t.throws(create({ ...waiting, end }), illegal('end'))
+  t.throws(create({ ...waiting, recur }), illegal('recur'))
+  t.throws(create({ ...waiting, mask }), illegal('mask'))
+  t.throws(create({ ...waiting, imask }), illegal('imask'))
+  t.throws(create({ ...waiting, parent }), illegal('parent'))
+  // t.throws(create({ ...waiting }), required('wait'))
 
   // recurring
-  t.throws(create({ ...recurring, end }), illegal)
-  t.throws(create({ ...recurring, wait }), illegal)
-  t.throws(create({ ...recurring, parent, mask }), illegal)
-  t.throws(create({ ...recurring, parent }), required) // imask
-  t.throws(create({ ...recurring, parent, imask }), invalid)
-  t.throws(create({ ...recurring, imask }), illegal)
-  t.throws(create({ ...recurring }), required) // mask
-  t.throws(create({ ...recurring, mask }), invalid)
-  t.throws(create({ ...recurring, mask: '-' }), required) // recur
-  t.throws(create({ ...recurring, mask: '-', recur }), invalid)
-  t.throws(create({ ...recurring, mask: '-', recur: 'weekly' }), required) // due
-  t.throws(create({ ...recurring, mask: '-', recur: 'weekly', due }), invalid)
+  t.throws(create({ ...recurring, end }), illegal('end'))
+  t.throws(create({ ...recurring, wait }), illegal('wait'))
+  t.throws(create({ ...recurring, parent, mask }), illegal('mask'))
+  t.throws(create({ ...recurring, parent }), required('imask'))
+  t.throws(create({ ...recurring, parent, imask }), invalid('imask'))
+  t.throws(create({ ...recurring, imask }), illegal('imask'))
+  t.throws(create({ ...recurring }), required('mask'))
+  t.throws(create({ ...recurring, mask }), invalid('mask'))
+  t.throws(create({ ...recurring, mask: '-' }), required('due'))
+  t.throws(create({ ...recurring, mask: '-', due }), invalid('due'))
+  t.throws(create({ ...recurring, mask: '-', due: date }), required('recur'))
+  t.throws(create({ ...recurring, mask: '-', due: date, recur }), invalid('recur'))
 })
