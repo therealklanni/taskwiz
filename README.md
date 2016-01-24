@@ -1,4 +1,4 @@
-# TaskWiz
+# TaskWiz [![Build Status](https://travis-ci.org/therealklanni/taskwiz.svg?branch=master)](https://travis-ci.org/therealklanni/taskwiz)
 
 > A TaskWarrior compatible Node.js task library
 
