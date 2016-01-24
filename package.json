@@ -1,6 +1,5 @@
 {
   "name": "taskwiz",
-  "version": "0.0.0",
   "description": "TaskWiz library, based on TaskWarrior",
   "main": "dist/taskwiz.js",
   "jsnext:main": "dist/taskwiz.es2015.js",
@@ -8,8 +7,10 @@
     "build": "rm -rf dist; npm run lint && rollup -c && rollup -c rollup.es2015-config.js",
     "lint": "standard index.js",
     "posttest": "#nyc --cache --reporter=lcov --reporter=text tap --no-cov --timeout=150 test/*.js",
-    "pretest": "npm run lint",
-    "test": "ava --tap | faucet"
+    "prebuild": "npm run lint",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "test": "DEBUG=taskwiz:json* ava --tap | faucet",
+    "test-ci": "ava --tap | faucet"
   },
   "keywords": [
     "task",
@@ -19,17 +20,23 @@
   "author": "Kevin Lanni <therealklanni@gmail.com> (https://github.com/therealklanni)",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.9.1",
+    "ava": "^0.11.0",
     "babel-preset-es2015-rollup": "^1.0.0",
     "babel-preset-stage-2": "^6.3.13",
     "faucet": "0.0.1",
     "rollup": "^0.24.0",
     "rollup-plugin-babel": "^2.3.6",
     "standard": "^5.4.1",
-    "tap": "^5.0.1"
+    "tap": "^5.0.1",
+    "semantic-release": "^undefined"
   },
   "dependencies": {
+    "debug": "^2.2.0",
     "moment": "^2.11.0",
     "uuid": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/therealklanni/taskwiz.git"
   }
 }
