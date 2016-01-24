@@ -28,7 +28,7 @@
     "rollup-plugin-babel": "^2.3.6",
     "standard": "^5.4.1",
     "tap": "^5.0.1",
-    "semantic-release": "^undefined"
+    "semantic-release": "^4.3.5"
   },
   "dependencies": {
     "debug": "^2.2.0",
