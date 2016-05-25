@@ -20,7 +20,7 @@
   "author": "Kevin Lanni <therealklanni@gmail.com> (https://github.com/therealklanni)",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.11.0",
+    "ava": "^0.15.0",
     "babel-preset-es2015-rollup": "^1.0.0",
     "babel-preset-stage-2": "^6.3.13",
     "faucet": "0.0.1",
