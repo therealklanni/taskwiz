@@ -21,7 +21,7 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.11.0",
-    "babel-preset-es2015-rollup": "^1.0.0",
+    "babel-preset-es2015-rollup": "^1.2.0",
     "babel-preset-stage-2": "^6.3.13",
     "faucet": "0.0.1",
     "rollup": "^0.24.0",
