@@ -33,7 +33,7 @@
   "dependencies": {
     "debug": "^2.2.0",
     "moment": "^2.11.0",
-    "uuid": "^2.0.1"
+    "uuid": "^3.0.1"
   },
   "repository": {
     "type": "git",
